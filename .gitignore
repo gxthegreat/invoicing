@@ -25,3 +25,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###< IntelliJ’s project specific settings files. ###
+.idea/
+###< symfony/webpack-encore-bundle ###
