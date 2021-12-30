@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as ReactDOM from 'react-dom';
 import InvoiceForm from './components/InvoiceForm';
 import InvoiceContextProvider from './context/InvoiceContext';
+import AppSnackbar from './components/AppSnackbar';
 
 class App extends Component
 {
@@ -10,6 +11,7 @@ class App extends Component
 		return (
 			<InvoiceContextProvider>
 				<InvoiceForm/>
+				<AppSnackbar/>
 			</InvoiceContextProvider>
 		);
 	}

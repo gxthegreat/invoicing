@@ -8,7 +8,7 @@ class InvoiceContextProvider extends Component
 	constructor( props )
 	{
 		super( props );
-		this.state	= { result: '' }
+		this.state	= { result: '', errMsg: '' }
 	}
 
 	calculateInvoice( e, data )
@@ -31,12 +31,13 @@ class InvoiceContextProvider extends Component
 			} } )
 			.then( response => {
 				this.setState( {
-					result: response.data.result
+					result: response.data.result,
+					errMsg: response.data.errMsg
 				} )
 			} ).catch( error => {
 				console.log( error.message )
 				this.setState( {
-					result: 'An unknown error has occurred'
+					errMsg: 'An unknown error has occurred'
 				} )
 		} )
 	}
@@ -46,7 +47,8 @@ class InvoiceContextProvider extends Component
 		return (
 			<InvoiceContext.Provider value={ {
 				...this.state,
-				calculateInvoice: this.calculateInvoice.bind( this )
+				calculateInvoice: this.calculateInvoice.bind( this ),
+				setMessage: ( message ) => this.setState( { errMsg: message } )
 			} }>
 				{ this.props.children }
 			</InvoiceContext.Provider>

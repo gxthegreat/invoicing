@@ -22,20 +22,23 @@ class InvoicingController extends AbstractController
 	 */
 	public function createSubmit( Request $request ): Response
 	{
-		$input	= new InvoicingInput( $request );
+		$jsonOutput	= array(
+			'result'	=> '',
+			'errMsg'	=> ''
+		);
+
+		$input		= new InvoicingInput( $request );
 
 		if ( ! $input->isValid() )
 		{
-			return $this->json( array(
-				'result'	=> $input->getErrorMsg()
-			) );
+			$jsonOutput['errMsg']	= $input->getErrorMsg();
+			return $this->json( $jsonOutput );
 		}
 
-		$invoice	= new Invoice( $input->get( InputKeys::CSV_DATA ) );
-		$calculator	= new InvoiceCalculator( $input, $invoice );
+		$invoice				= new Invoice( $input->get( InputKeys::CSV_DATA ) );
+		$calculator				= new InvoiceCalculator( $input, $invoice );
+		$jsonOutput['result']	= 'Invoice total: ' . $calculator->getInvoiceTotal();
 
-		return $this->json([
-			'result'	=> 'Invoice total: ' . $calculator->getInvoiceTotal()
-		]);
+		return $this->json( $jsonOutput );
 	}
 }
